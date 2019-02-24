@@ -33,7 +33,7 @@ void setup() {
 
 void draw() {
   background(0);
-  translate(width / 2, height / 2, 0);
+  //translate(width / 2, height / 2, 0);
   lights();
   sun.show();
   sun.orbit();
@@ -92,17 +92,11 @@ void keyPressed() {
 
 void showCamera() {
   if(generalViewMode) {
-    camera(width/2.0, height/2.0, (height/2.0) / tan(PI*30.0 / 180.0), mouseX, mouseY, 0, 0, 1, 0);
+    camera(0, 0, (height/2.0) / tan(PI*30.0 / 180.0), mouseX, mouseY, 0, 0, 1, 0);
   } else {
-    float x = cos(yAngle) * (xDestructorCoordinate*0.17 + width/2.0);
-    float y = -yDestructorCoordinate*0.17 + height/2.0;
-    float z = sin(yAngle) * (xDestructorCoordinate*0.17 + width/2.0);
-    println("x: " + x + "y: " + y + "z: " + z);
-    println("yAngle: " + yAngle);
-    pushMatrix();
-    translate(-width, 0, 0);
-    sphere(10);
-    popMatrix();
-    camera(x, y, z, -width, height/2.0, 0, 0, 1, 0);
+    float x = cos(yAngle) * (xDestructorCoordinate*0.17);
+    float y = -yDestructorCoordinate*0.17;
+    float z = sin(yAngle) * (xDestructorCoordinate*0.17);
+    camera(x, y, z, mouseX - width/2, mouseY - height/2, 0, 0, 1, 0);
   }
 }
