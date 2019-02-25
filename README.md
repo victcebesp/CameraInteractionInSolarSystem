@@ -1,51 +1,39 @@
-# Sistema planetario
-Víctor Ceballos Espinosa
-
+# Interacción con la cámara en el sistema planetario
+Víctor Ceballos Espinosa
+
 ## Introducción
-En esta ocasión, el objetivo principal de la práctica consiste en hacer uso de los métodos relacionados con las transformaciones disponibles en Processing. Entre esas transformaciones podemos encontrar escalado, rotaciones o traslaciones. Inicialmente realizamos pruebas con objetos en dos dimensiones y posteriormente pasamos a las tres dimensiones.
+Esta práctica tiene por objetivo ampliar la práctica anterior aportando la posibilidad de cambiar entre dos cámaras diferentes. Por un lado se encontrará la cámara global mediante la cual tendremos una visión global del sistema planetario. Por otro lado encontramos una cámara desde el punto de vista de la nave que se implementó en la anterior práctica. Esta segunda cámara, en vez de tener una visión global del sistema planetario, nos permitirá movernos entre los planetas siguiendo la movilidad que se describió en la anterior práctica y que será nombrada de nuevo en este informe para mayor claridad y comodidad.
 
-Esta práctica consiste en implementar un sistema planetario en el que se sitúen una estrella, cinco planetas y por lo menos una luna. En mi caso he querido imitar el sistema solar, por lo que he implementado un Sol, alrededor cinco planetas entre los cuales se encuentra la Tierra con sus respectiva Luna.
+## Cámara
+Tal y como se indicó en la introducción, en esta implementación existen dos cámaras, una cámara global y una desde el punto de vista de la nave. En la práctica anterior ya había implementado una cámara global. Sin embargo, en vez de usar la función camera de Processing, usé una herramienta llamada PeasyCam a raíz de un vídeo que ví en el canal de youtube The Coding Challenge.
 
+Para una implementación más cómoda, tomé la decisión de dejar de usar esa herramienta y pasar a usar la función camera de Processing.
 
-## Representación
-Para la representación de los planetas, estrella y luna, decidí crear una clase llamada CelestialBody. Al ser dicha clase la responsable de representar a los diferentes cuerpos celestiales, los objetos de dicha clase reciben por constructor argumentos típicos de la definición de un cuerpo celestial como son el radio o la velocidad en órbita.
+En esta cámara global, lo único que tuve que hacer fue cambiar los parámetros que vienen por defecto, desplazando la cámara al punto (0, 0, (height/2.0) / tan(PI*30.0 / 180.0). Adicionalmente, dinámicamente cambio el punto al que mira la cámara haciendo uso de mouseX y mouseY. Para conseguir que la cámara apunte al centro de la pantalla cuando el ratón esté situado en el centro de la misma, a mouseX le resto la mitad del ancho de la pantalla y a mouseY le resto la mitad de la altura de la pantalla.
 
+Con esto se consigue que el usuario moviendo el ratón por la pantalla, de forma intuitiva pueda mover el punto al que la cámara está mirando.
 
-Como se puede ver cuando se ejecuta el programa, los diferentes cuerpos celestiales tienen diferentes texturas. Esto se consigue pasándoles por el constructor una PImage que se le aplica luego con el método de PShape setTexture(). 
+Como se indicó anteriormente, existen dos tipos de cámaras. Para alterar entre ellas, se tiene que pulsar la tecla “c”. Cuando dicha tecla se pulsa, se cambia el valor de la variable generalViewMode, de tal manera que en vez de mostrar la cámara global en el método showCamera, se muestre la cámara desde el punto de vista de la imagen.
 
-Por último, cada cuerpo celestial tiene un nombre que es mostrado justo encima del mismo. Esto se consigue pasando por el constructor el nombre de dicho cuerpo celestial y haciendo uso del método text.
+Una vez se está en la cámara de la nave, se podrá seguir haciendo uso de los controles mediante los cuales se mueve la nave explicados en la práctica anterior. Dichos controles son:
 
-## Rotación
-Sin duda alguna, uno de los aspectos más interesantes de la práctica, tiene que ver con una transformación. Para ser más específico, me refiero a la transformación de rotación. Cuando se crea un cuerpo celestial, aleatoriamente se le asigna un vector en tres dimensiones que es escalado luego con el argumento distancia que recibe por el constructor. Si rotamos el cuerpo celestial sobre ese vector, giraría sobre sí mismo. Es por esto que necesitamos un vector que nos permite hacer rotar correctamente el planeta sobre la estrella o la luna sobre el planeta. Para conseguir esto, a partir del vector interno y un vector perpendicular a este, obtengo un vector perpendicular al plano que forman haciendo un producto vectorial entre ambos.
+ - Para mover la nave hacia delante, se hará uso de la tecla “w”.
+ - Para mover la nave hacia detrás, se hará uso de la tecla “s”.
+ - Para mover la nave hacia la derecha, se hará uso de la tecla “d”.
+ - Para mover la nave hacia la izquierda, se hará uso de la tecla “a”.
+ - Para mover la nave hacia arriba, se hará uso de la tecla “ESPACIO”.
+ - Para mover la nave hacia debajo, se hará uso de la tecla “x”.
 
-Ya con el vector correcto sobre el que hay que rotar, y haciendo uso del método rotate en la versión en la que se le puede pasar un ángulo y las tres componentes de un vector, se consigue hacer rotar el cuerpo celestial correctamente.
+Adicionalmente, se podrá interactuar con la cámara de la misma forma que con la cámara global. Moviendo el ratón, se podrá cambiar el punto al que mira dicha cámara. En está ocasión aparece una complicación, cuando la nave está situada detrás del sol, el sentido del eje x es el opuesto. Para mantener el control de la cámara, se controla si la nave está delante o detrás del sol, modificando el parámetro de la función camera.
 
-Todo esto se encuentra encerrado entre los métodos pushMatrix y popMatrix para que las transformaciones no afecten a cuerpos celestiales no relacionados. En el caso de la Tierra y la Luna si debería afectar porque están relacionados (la Luna rota alrededor de la Tierra).
+Adicionalmente, en esta segunda cámara, se permite hacer un movimiento conocido en el mundo de la aviación como un rodamiento (roll). Para hacer este movimiento, bastará con usar las teclas de flecha izquierda y derecha.
 
-Por supuesto, en cada llamada del método draw se aumenta el ángulo que se le pasa al método rotate para que efectivamente los cuerpos celestiales roten.
+Todas las indicaciones sobre el control se pueden encontrar en las instrucciones escritas al ejecutar la aplicación.
 
-Lo explicado acerca de la rotación se encuentra en el método show de la clase CelestialBody.
+## Referencias
 
+[Repositorio de GitHub](https://github.com/victcebesp/CameraInteractionInSolarSystem)
 
-## Objeto controlado por teclado
-Para implementar el requerimiento de poder controlar por teclado un objeto, he decidido cargar el modelo de un destructor de Star Wars. Las instrucciones para su control se encuentran explicadas en la aplicación y las podrá ver cuando la ejecute. Sin embargo para mayor aclaración, las añado aquí también:
+[Video de Youtube en el que se usa PeasyCam](https://www.youtube.com/watch?v=FGAwi7wpU8c)
 
-- Para mover el destructor hacia delante, se hará uso de la tecla “w”.
-- Para mover el destructor hacia detrás, se hará uso de la tecla “s”.
-- Para mover el destructor hacia la derecha, se hará uso de la tecla “d”.
-- Para mover el destructor hacia la izquierda, se hará uso de la tecla “a”.
-- Para mover el destructor hacia arriba, se hará uso de la tecla “ESPACIO”.
-- Para mover el destructor hacia debajo, se hará uso de la tecla “x”.
-
-## Cámara
-He decidido añadir una herramienta que permita mover la cámara usando el ratón, de tal manera que el usuario pueda observar el sistema planetario desde diferentes puntos de vista. Para mover la cámara, se tendrá que hacer un click con el ratón y arrastrar. La herramienta también permite hacer zoom haciendo uso de la rueda del ratón.
-
-## Referencias
-Para las diferentes texturas
-http://planetpixelemporium.com
-
-Enunciado de la práctica
-https://cv-aep.ulpgc.es/cv/ulpgctp19/pluginfile.php/182523/mod_resource/content/10/CIU_Pr_cticas.pdf
-
-Repositorio de Github
-https://github.com/victcebesp/Planetarium
+[Enunciado de la práctica](https://cv-aep.ulpgc.es/cv/ulpgctp19/pluginfile.php/182523/mod_resource/content/12/CIU_Pr_cticas.pdf)
