@@ -1,7 +1,8 @@
 # Interacción con la cámara en el sistema planetario
-Víctor Ceballos Espinosa
-
-## Introducción
+Víctor Ceballos Espinosa
+
+## Introducción
+
 Esta práctica tiene por objetivo ampliar la práctica anterior aportando la posibilidad de cambiar entre dos cámaras diferentes. Por un lado se encontrará la cámara global mediante la cual tendremos una visión global del sistema planetario. Por otro lado encontramos una cámara desde el punto de vista de la nave que se implementó en la anterior práctica. Esta segunda cámara, en vez de tener una visión global del sistema planetario, nos permitirá movernos entre los planetas siguiendo la movilidad que se describió en la anterior práctica y que será nombrada de nuevo en este informe para mayor claridad y comodidad.
 
 ## Cámara
@@ -30,7 +31,7 @@ Adicionalmente, en esta segunda cámara, se permite hacer un movimiento conocido
 
 Todas las indicaciones sobre el control se pueden encontrar en las instrucciones escritas al ejecutar la aplicación.
 
-## Referencias
+## Referencias
 
 [Repositorio de GitHub](https://github.com/victcebesp/CameraInteractionInSolarSystem)
 
